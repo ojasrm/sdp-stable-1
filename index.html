@@ -248,11 +248,11 @@
                 const match_re = new RegExp(`${match_term}`, 'i')
                 // var searchQuery = "*" + x.elements[0].value + "*";
                 // baseQuery["Document Name"] = searchQuery;
-                for (i in fetchedData) {
+                for (n in fetchedData) {
                     // console.log(data[i]['Document Name']);
-                    if (fetchedData[i]['Document Name'].match(match_re) != null) {
+                    if (fetchedData[n]['Document Name'].match(match_re) != null) {
                         // console.log(data[i]['Document Name']);
-                        searchText.push(fetchedData[i]['Document Name'].match(match_re).input);
+                        searchText.push(fetchedData[n]['Document Name'].match(match_re).input);
                     }
                     // console.log(data[i]['Document Name'].match(/test/gi));
                 }
@@ -480,8 +480,6 @@
         // Drive API Below
         // Make sure the client is loaded and sign-in is complete before calling this method.
         function execute() {
-
-
             function getIdFromUrl(url) {
                 return url.match(/[-\w]{25,}/);
             }
