@@ -334,11 +334,18 @@
                 result = fetchedData.filter(o => Object.keys(filterBy).every(k => filterBy[k].some(f => o[k] === f)));
             // console.log(result);
 
-            try {
+            // if (result.length) {
+            //     console.log('data available');
+            // }
+            // else {
+            //     console.log('no data');
+            // }
+            if (result.length) {
                 successFunc(result)
-            } catch (error) {
+            }
+            else {
                 errorFunc()
-                console.log(error)
+
             }
 
             // var filter = fetchedData,
