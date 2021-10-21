@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" /> -->
+
+    <!-- Google Sign In Button  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="row justify-content-end">
+        <div class="col-md-3">
+            <a class="btn btn-outline-dark" onclick="authenticate().then(loadClient)" role="button"
+                style="text-transform:none">
+                <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                Login with Google
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!--Search-bar-->
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <form class="input-group rounded p-1" id="search" target="" oninput="search_sheet()">
+                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                        aria-describedby="search-addon" name="fname" id="fname" oninput="search_sheet()"
+                        onkeydown="return (event.keyCode!=13);" />
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--Filter by Record-->
+            <div class="col border">
+                <div id="filter-record">
+                    <h2 class="text-center">Filter by Record Type</h2>
+                    <div class="row">
+                        <div class="col-3 p-1">
+                            <input value="GCP" type="checkbox" id="gcp" name="filter" onclick="search_sheet()"
+                                type="search" />
+                            <label for="gcp">GCP</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="AWS" type="checkbox" id="aws" name="filter" onclick="search_sheet()"
+                                type="search" />
+                            <label for="aws">AWS</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="GWS" type="checkbox" id="gws" name="filter" onclick="search_sheet()" />
+                            <label for="gws">GWS</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="Happier" type="checkbox" id="happier" name="filter"
+                                onclick="search_sheet()" />
+                            <label for="happier">Happier</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="Recognic" type="checkbox" id="recognic" name="filter"
+                                onclick="search_sheet()" />
+                            <label for="recognic">Recognic</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 p-1">
+                            <input value="Location Intelligence" type="checkbox" id="location-intelligence"
+                                name="filter" onclick="search_sheet()" />
+                            <label for="location-intelligence">Location <br />Intelligence</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="AM" type="checkbox" id="am" name="filter" onclick="search_sheet()" />
+                            <label for="am">AM</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="Chrome" type="checkbox" id="chrome" name="filter" onclick="search_sheet()" />
+                            <label for="chrome">Chrome</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="D&A" type="checkbox" id="dna" name="filter" onclick="search_sheet()" />
+                            <label for="dna">D&A</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="MS" type="checkbox" id="ms" name="filter" onclick="search_sheet()" />
+                            <label for="ms">MS</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--Filter by Record-->
+            <div class="col border">
+                <div id="filter-region">
+                    <h2 class="text-center">Filter by Region</h2>
+                    <div class="row">
+                        <div class="col-2 p-1">
+                            <input value="APAC" type="checkbox" id="apac" name="filter" onclick="search_sheet()" />
+                            <label for="apac">APAC</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="INDIA" type="checkbox" id="india" name="filter" onclick="search_sheet()" />
+                            <label for="india">INDIA</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input type="checkbox" value="AMER" id="amer" name="filter" onclick="search_sheet()" />
+                            <label for="amer">AMER</label>
+                        </div>
+                        <div class="col-2 p-1">
+                            <input value="EMEA" type="checkbox" id="emea" name="filter" onclick="search_sheet()" />
+                            <label for="emea">EMEA</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!--Create Template button-->
+        <div class="row mt-5 justify-content-start">
+            <div class="col-4 p-2">
+                <button onclick="execute()" type="button" class="btn btn-danger" id="myBtn">
+                    Create Template
+                </button>
+            </div>
+        </div>
+
+        <!--Success Modal -->
+        <div class="modal fade" id="mySuccessModal" role="dialog" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Your files are ready!</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <h4>You’re files have been successfully created in the <a
+                                href="https://drive.google.com/drive/folders/1Di1luMkvY2uxz6Rae8KeuDW80foEAHmZ?usp=sharing"
+                                target="_blank">Folder</a>
+                        </h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!--Failure Modal -->
+        <div class="modal fade" id="myFailureModal" role="dialog" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Error</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body text-center">
+                        <h4>Access Denied</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--Table-->
+    <div class="container">
+        <table class="table" id="mytable">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Document Name</th>
+                    <th>View Document</th>
+                    <th>Description</th>
+                    <th>Product</th>
+                </tr>
+            </thead>
+            <tbody id="data"></tbody>
+        </table>
+    </div>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+
+        // Fetch Data
+        const api_url = "https://script.googleusercontent.com/a/macros/searce.com/echo?user_content_key=zkcBmls0xDMt2MsBXWq2ZZlUM_sTUFb6GOj0HslFq2SdxB6GO9U7EuWZc-SzGWES2AoB-uQ9Hcs8-sEwoJ_qyUoaf5YeoMejm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_nRPgeZU6HP-Yl9L_fup0xI5xQJLnggV41t7sOusIsA7oBcq7GU-kAcPNHe6BwwB9FlP2kMfvUn8h67WS6eGvnUrnUClQ7txaxz5_p69iB_S_p4LV1Kg6bDoE9nAgB7m3nSaAsPCb1w4&lib=MkQHuEW-EK887oNH3E2IUg4ExaAWmCXBj"
+
+        let fetchedData
+        fetch(api_url)
+            .then(res => res.json())
+            .then(data => {
+                fetchedData = data
+                console.log('Data fetched')
+            })
+            .catch(error => console.log('ERROR'))
+
+        //Search the sheet(fetchedData) with filters
+        function search_sheet() {
+            //const api_address = "https://sheetsu.com/apis/v1.0su/441f6bfab693";
+            var x = document.getElementById("search");
+            // var baseQuery = {};
+            successFunc = printit();
+            //baseQuery["Document Name"] = "*";
+
+            var searchText = [];
+            var reg = [];
+            var rec = [];
+            var filterCondition = {};
+
+            if (x.elements[0].value) {
+                const match_term = x.elements[0].value;
+                const match_re = new RegExp(`${match_term}`, 'i')
+                // var searchQuery = "*" + x.elements[0].value + "*";
+                // baseQuery["Document Name"] = searchQuery;
+                for (i in fetchedData) {
+                    // console.log(data[i]['Document Name']);
+                    if (fetchedData[i]['Document Name'].match(match_re) != null) {
+                        // console.log(data[i]['Document Name']);
+                        searchText.push(fetchedData[i]['Document Name'].match(match_re).input);
+                    }
+                    // console.log(data[i]['Document Name'].match(/test/gi));
+                }
+            }
+
+            if (document.getElementById("gcp").checked == true) {
+                rec.push("GCP");
+            }
+            if (document.getElementById("aws").checked == true) {
+                rec.push("AWS");
+            }
+            if (document.getElementById("gws").checked == true) {
+                rec.push("GWS");
+            }
+            if (document.getElementById("happier").checked == true) {
+                rec.push("Happier");
+            }
+            if (document.getElementById("recognic").checked == true) {
+                rec.push("Recognic");
+            }
+            if (document.getElementById("location-intelligence").checked == true) {
+                rec.push("Location Intelligence");
+            }
+            if (document.getElementById("am").checked == true) {
+                rec.push("AM");
+            }
+            if (document.getElementById("chrome").checked == true) {
+                rec.push("Chrome");
+            }
+            if (document.getElementById("dna").checked == true) {
+                rec.push(escape("D&A"));
+            }
+            if (document.getElementById("ms").checked == true) {
+                rec.push("MS");
+            }
+
+
+            if (document.getElementById("apac").checked == true) {
+                reg.push("APAC");
+            }
+            if (document.getElementById("india").checked == true) {
+                reg.push("INDIA");
+            }
+            if (document.getElementById("amer").checked == true) {
+                reg.push("AMER");
+            }
+            if (document.getElementById("emea").checked == true) {
+                reg.push("EMEA");
+            }
+
+            if (searchText.length) {
+                if (rec.length && reg.length) {
+                    filterCondition = { "Document Name": searchText, "Record type": rec, "Region": reg };
+                }
+                else if (!rec.length && reg.length) {
+                    filterCondition = { "Document Name": searchText, "Region": reg };
+                }
+                else if (rec.length && !reg.length) {
+                    filterCondition = { "Document Name": searchText, "Record type": rec };
+                }
+                else {
+                    filterCondition = { "Document Name": searchText }
+                }
+
+            }
+            else {
+                if (rec.length && reg.length) {
+                    filterCondition = { "Record type": rec, "Region": reg };
+                }
+                else if (!rec.length && reg.length) {
+                    filterCondition = { "Region": reg };
+                }
+                else if (rec.length && !reg.length) {
+                    filterCondition = { "Record type": rec };
+                }
+            }
+            var filter = fetchedData,
+                filterBy = filterCondition,
+                result = fetchedData.filter(o => Object.keys(filterBy).every(k => filterBy[k].some(f => o[k] === f)));
+            // console.log(result);
+
+            try {
+                successFunc(result)
+            } catch (error) {
+                errorFunc()
+                console.log(error)
+            }
+
+            // var filter = fetchedData,
+            //     filterBy = { "Document Name": searchText, "Record type": rec, "Region": reg },
+            //     result = fetchedData.filter(o => Object.keys(filterBy).every(k => filterBy[k].some(f => o[k] === f)));
+            // filteredData.push(result)
+            // console.log(filteredData);
+
+            // if (reg.length > 0 && rec.length > 0) {
+            //     for (let i = 0; i < reg.length; i++) {
+            //         baseQuery["Region"] = reg[i];
+            //         for (let j = 0; j < rec.length; j++) {
+            //             baseQuery["Record type"] = rec[j];
+            //             Sheetsu.read(
+            //                 api_address, {
+            //                 search: baseQuery,
+            //                 ignore_case: true,
+            //                 limit: 20,
+            //             },
+
+            //             ).then(successFunc, errorFunc);
+            //         }
+            //     }
+            // } else if (reg.length > 0 && rec.length == 0) {
+            //     for (let i = 0; i < reg.length; i++) {
+            //         baseQuery["Region"] = reg[i];
+            //         Sheetsu.read(
+            //             api_address, {
+            //             search: baseQuery,
+            //             ignore_case: true,
+            //             limit: 20,
+            //         },
+
+            //         ).then(successFunc, errorFunc);
+            //     }
+            // } else if (reg.length == 0 && rec.length > 0) {
+            //     for (let j = 0; j < rec.length; j++) {
+            //         baseQuery["Record type"] = rec[j];
+            //         Sheetsu.read(
+            //             api_address, {
+            //             search: baseQuery,
+            //             ignore_case: true,
+            //             limit: 20,
+            //         },
+
+            //         ).then(successFunc, errorFunc);
+            //     }
+            // } else {
+            //     Sheetsu.read(
+            //         api_address, {
+            //         search: baseQuery,
+            //         ignore_case: true,
+            //         limit: 20,
+            //     },
+
+            //     ).then(successFunc, errorFunc);
+            // }
+        }
+
+        var tableData = data;
+        var url = []
+        var i = 0;
+
+        function printit() {
+            var temp = "";
+            //Empty url array
+            while (url.length > 0) {
+                url.pop();
+            }
+            i = 0;
+
+            function successFunc(data) {
+                if (data.length > 0) {
+                    data.forEach((itemData) => {
+                        temp += "<tr>";
+                        temp += "<td>" + `<input type="checkbox" id="multiple-${i}"/>` + "</td>";
+                        temp += "<td>" + itemData["Document Name"] + "</td>";
+                        temp += "<td>" +
+                            `<a href=${itemData["Document Link"]}  target="_blank">
+                                <img src="https://1000logos.net/wp-content/uploads/2020/05/Google-Docs-logo.png" 
+                                alt="Err" width="30" height="auto"></a>` +
+                            "</td>";
+                        temp += "<td>" + itemData["Description"] + "</td>";
+                        temp += "<td>" + itemData["Record type"] + "</td>";
+                        i++;
+                    });
+                }
+                document.getElementById("data").innerHTML = temp;
+                tableData = data;
+
+                updateurl(tableData);
+            }
+            return successFunc;
+        }
+
+        function updateurl(tableData) {
+            for (let i = 0; i < tableData.length; i++) {
+                url.push(tableData[i]["Document Link"])
+            }
+        }
+
+        function errorFunc() {
+            var temp = "";
+            document.getElementById("data").innerHTML = temp;
+            document.getElementById("data").innerHTML = "No records found";
+        };
+
+        function authenticate() {
+            return gapi.auth2
+                .getAuthInstance()
+                .signIn({
+                    scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.photos.readonly",
+                })
+                .then(
+                    function () {
+                        console.log("Sign-in successful");
+                        alert('Sign-in successful');
+                    },
+                    function (err) {
+                        console.error("Error signing in", err);
+                        alert('Error signing in');
+                    }
+                );
+        }
+
+        function loadClient() {
+            gapi.client.setApiKey("AIzaSyALp5CeNEOTGlUZvQitm5Toxqn3roo0qas");
+            return gapi.client
+                .load("https://content.googleapis.com/discovery/v1/apis/drive/v3/rest")
+                .then(
+                    function () {
+                        console.log("GAPI client loaded for API");
+                    },
+                    function (err) {
+                        console.error("Error loading GAPI client for API", err);
+                    }
+                );
+        }
+        // Drive API Below
+        // Make sure the client is loaded and sign-in is complete before calling this method.
+        function execute() {
+
+
+            function getIdFromUrl(url) {
+                return url.match(/[-\w]{25,}/);
+            }
+
+            var checkedUrl = []
+            //Selected url
+            for (let i = 0; i < url.length; i++) {
+                var x = url[i]
+                if (document.getElementById(`multiple-${i}`).checked) {
+                    var doc_id = getIdFromUrl(x)
+                    checkedUrl.push(doc_id)
+                    gapi.client.drive.files
+                        .copy({
+                            fileId: doc_id,
+                            resource: {
+                                "parents": ["1Di1luMkvY2uxz6Rae8KeuDW80foEAHmZ"]
+                            },
+                        })
+                        .then(
+                            function (response) {
+                                // Handle the results here (response.result has the parsed body).
+                                console.log("Response", response);
+                                $(document).ready(function () {
+                                    $("#mySuccessModal").modal();
+                                });
+                            },
+                            function (err) {
+                                console.error("Execute error", err);
+                                $(document).ready(function () {
+                                    $("#myFailureModal").modal();
+                                });
+                            }
+                        );
+                }
+
+
+            }
+
+            //console.log(checkedUrl);
+            // console.log(getIdFromUrl(x))
+
+
+            // console.log(x)
+            // return gapi.client.drive.files
+            //     .copy({
+            //         fileId: doc_id,
+            //         resource: {
+            //             "parents": ["1Di1luMkvY2uxz6Rae8KeuDW80foEAHmZ"]
+            //         },
+            //     })
+            //     .then(
+            //         function (response) {
+            //             // Handle the results here (response.result has the parsed body).
+            //             console.log("Response", response);
+            //         },
+            //         function (err) {
+            //             console.error("Execute error", err);
+            //         }
+            //     );
+        }
+        gapi.load("client:auth2", function () {
+            gapi.auth2.init({
+                client_id: "828363173928-blovod76p8vohpbemrggq5jnm2qb79li.apps.googleusercontent.com",
+            });
+        });
+
+
+    </script>
+
+    <script src="https://load.sheetsu.com"></script>
+    <script src="https://script.sheetsu.com/"></script>
+    <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+</body>
+
+</html>
